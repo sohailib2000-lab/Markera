@@ -22,31 +22,6 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Floating Ambient Ornament */}
-      <motion.div
-        className="absolute pointer-events-none opacity-20"
-        style={{
-          width: "150px",
-          height: "150px",
-          borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(201,168,124,0.15) 0%, transparent 70%)",
-          filter: "blur(40px)",
-          top: "20%",
-          right: "15%",
-          zIndex: -1,
-        }}
-        animate={{
-          y: [0, -30, 0],
-          x: [0, 20, 0],
-          scale: [1, 1.1, 1],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-
       {/* Tagline above brand */}
       <motion.div
         className="uppercase tracking-[0.3em] font-semibold"
