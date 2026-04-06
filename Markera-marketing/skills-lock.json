@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "last30days": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "computedHash": "02ebf2122acc9ef4f329c4e7901647d6b64edcf9d59eadda2759ccc3d5c61148"
+    },
+    "remotion-best-practices": {
+      "source": "remotion-dev/skills",
+      "sourceType": "github",
+      "computedHash": "2f673b7710813ac07c71c0a54657f740078aec6585f15edf351494499e1f9ac3"
+    }
+  }
+}
