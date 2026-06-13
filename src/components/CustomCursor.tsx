@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, useSpring, useMotionValue, useVelocity, useAnimationFrame } from "framer-motion";
 
 export default function CustomCursor() {
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const dotX = useMotionValue(-100);
   const dotY = useMotionValue(-100);
 
@@ -37,6 +38,12 @@ export default function CustomCursor() {
   });
 
   useEffect(() => {
+    const touch = window.matchMedia("(pointer: coarse)").matches;
+    setIsTouchDevice(touch);
+  }, []);
+
+  useEffect(() => {
+    if (isTouchDevice) return;
     const move = (e: MouseEvent) => {
       dotX.set(e.clientX);
       dotY.set(e.clientY);
@@ -60,7 +67,9 @@ export default function CustomCursor() {
         el.removeEventListener("mouseleave", leaveInteractive);
       });
     };
-  }, [dotX, dotY]);
+  }, [dotX, dotY, isTouchDevice]);
+
+  if (isTouchDevice) return null;
 
   // If hovering, we expand the ring and fade out the dot
   return (

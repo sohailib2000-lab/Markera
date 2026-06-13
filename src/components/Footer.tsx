@@ -10,7 +10,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative z-10 w-full flex flex-col items-center" style={{ paddingTop: "10rem" }}>
+    <footer className="relative z-10 w-full flex flex-col items-center" style={{ paddingTop: "clamp(5rem, 10vw, 10rem)" }}>
       {/* Scroll to Top Button */}
       <div 
         className="cursor-pointer group flex items-center justify-center rounded-full transition-all duration-500"
@@ -50,7 +50,7 @@ export default function Footer() {
           </div>
 
           {/* Links columns */}
-          <div className="flex" style={{ gap: "5rem" }}>
+          <div className="flex flex-wrap" style={{ gap: "clamp(2rem, 5vw, 5rem)" }}>
             <div>
               <h4 className="uppercase" style={{ fontSize: "9px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.3)", fontFamily: "Outfit, sans-serif", marginBottom: "1.25rem" }}>Navigate</h4>
               <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
@@ -76,7 +76,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div style={{ width: "100%", padding: "1.5rem 0", display: "flex", justifyContent: "center", alignItems: "center", gap: "2rem" }}>
+      <div style={{ width: "100%", padding: "1.5rem 1rem", display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "center", gap: "0.75rem" }}>
         <a 
           href="https://www.instagram.com/markeramedia" 
           target="_blank" 

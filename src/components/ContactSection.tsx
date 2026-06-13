@@ -11,10 +11,33 @@ export default function ContactSection() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("sending");
-    await new Promise((r) => setTimeout(r, 1200));
-    setStatus("sent");
-    (e.target as HTMLFormElement).reset();
-    setTimeout(() => setStatus("idle"), 5000);
+
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const message = formData.get("message") as string;
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Submission failed");
+      }
+
+      setStatus("sent");
+      (e.target as HTMLFormElement).reset();
+      setTimeout(() => setStatus("idle"), 5000);
+    } catch (err) {
+      console.error("Failed to submit contact form:", err);
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 6000);
+    }
   };
 
   return (
@@ -104,14 +127,15 @@ export default function ContactSection() {
               >
                 <div>
                   <div className="laser-wrap">
-                    <input id="name" type="text" placeholder="Your name" required className="laser-input" />
+                    <input id="name" name="name" type="text" placeholder="Your name" required className="laser-input" />
                   </div>
                   <div className="laser-wrap">
-                    <input id="email" type="email" placeholder="Email address" required className="laser-input" />
+                    <input id="email" name="email" type="email" placeholder="Email address" required className="laser-input" />
                   </div>
                   <div className="laser-wrap">
                     <textarea
                       id="message"
+                      name="message"
                       placeholder="Tell us about your goals..."
                       required
                       rows={4}
@@ -121,38 +145,55 @@ export default function ContactSection() {
                   </div>
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={status === "sending"}
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    padding: "20px 0",
-                    borderRadius: "16px",
-                    background: "rgba(255,255,255,0.02)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    color: "white",
-                    fontSize: "11px",
-                    fontWeight: 600,
-                    letterSpacing: "0.18em",
-                    textTransform: "uppercase",
-                    fontFamily: "Outfit, sans-serif",
-                    marginTop: "1.5rem",
-                    transition: "all 0.3s ease",
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)";
-                    e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
-                    e.currentTarget.style.background = "rgba(255,255,255,0.02)";
-                  }}
-                >
-                  {status === "sending" ? "Sending..." : "Send Message"}
-                </button>
+                <div>
+                  {status === "error" && (
+                    <div style={{
+                      color: "#f87171",
+                      fontSize: "0.85rem",
+                      fontFamily: "DM Sans, sans-serif",
+                      marginBottom: "1rem",
+                      textAlign: "center",
+                      background: "rgba(248, 113, 113, 0.05)",
+                      border: "1px solid rgba(248, 113, 113, 0.15)",
+                      padding: "10px",
+                      borderRadius: "8px"
+                    }}>
+                      Failed to submit. Please try again or check settings.
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={status === "sending"}
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: "20px 0",
+                      borderRadius: "16px",
+                      background: "rgba(255,255,255,0.02)",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      color: "white",
+                      fontSize: "11px",
+                      fontWeight: 600,
+                      letterSpacing: "0.18em",
+                      textTransform: "uppercase",
+                      fontFamily: "Outfit, sans-serif",
+                      transition: "all 0.3s ease",
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)";
+                      e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+                      e.currentTarget.style.background = "rgba(255,255,255,0.02)";
+                    }}
+                  >
+                    {status === "sending" ? "Sending..." : "Send Message"}
+                  </button>
+                </div>
               </form>
             )}
           </GlassCard>

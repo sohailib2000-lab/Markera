@@ -8,8 +8,8 @@ export default function PhilosophySection() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="philosophy" className="relative z-10 flex items-center justify-center text-center"
-      style={{ padding: "12rem 1.5rem" }}>
+    <section id="philosophy" className="relative z-10 flex items-center justify-center text-center overflow-hidden"
+      style={{ padding: "clamp(5rem, 12vw, 12rem) 1.5rem" }}>
       {/* Ambient glow */}
       <div className="absolute bottom-0 right-[-10%] w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{ background: "radial-gradient(circle, rgba(99,102,241,0.05) 0%, transparent 70%)" }} />

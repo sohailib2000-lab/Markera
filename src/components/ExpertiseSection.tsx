@@ -31,7 +31,7 @@ export default function ExpertiseSection() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="expertise" className="relative z-10" style={{ padding: "8rem 1.5rem" }}>
+    <section id="expertise" className="relative z-10 overflow-hidden" style={{ padding: "clamp(4rem, 8vw, 8rem) 1.5rem" }}>
       <div className="absolute top-0 left-[-10%] w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{ background: "radial-gradient(circle, rgba(201,168,124,0.04) 0%, transparent 70%)" }} />
 
@@ -57,9 +57,9 @@ export default function ExpertiseSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
           {expertise.map((item, i) => (
-            <GlassCard key={item.title} delay={i * 0.12} className="relative p-10 flex flex-col justify-start overflow-hidden" 
+            <GlassCard key={item.title} delay={i * 0.12} className="relative p-6 sm:p-10 flex flex-col justify-start overflow-hidden" 
               style={{ 
-                minHeight: "440px", 
+                minHeight: "340px", 
                 borderRadius: "24px",
                 background: "transparent",
                 backdropFilter: "none",
@@ -69,16 +69,14 @@ export default function ExpertiseSection() {
               
               {/* Background number - top right */}
               <div 
-                className="absolute pointer-events-none select-none"
+                className="absolute pointer-events-none select-none glass-card-num"
                 style={{ 
                   top: "-0.5rem",
                   right: "-0.5rem",
                   fontFamily: "Outfit, sans-serif",
-                  fontSize: "14rem",
+                  fontSize: "clamp(7rem, 18vw, 14rem)",
                   fontWeight: 800,
                   lineHeight: 1,
-                  color: "transparent",
-                  WebkitTextStroke: "1px rgba(255,255,255,0.06)",
                   zIndex: 0
                 }}
               >

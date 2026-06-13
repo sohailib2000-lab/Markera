@@ -68,7 +68,7 @@ export default function HeroSection() {
           onClick={() => scrollTo("#contact")} 
           className="relative uppercase tracking-[0.25em] text-[10px] sm:text-[11px] font-semibold transition-all duration-300 overflow-hidden group"
           style={{ 
-            padding: "20px 50px",
+            padding: "clamp(14px, 3vw, 20px) clamp(28px, 6vw, 50px)",
             borderRadius: "9999px",
             color: "white",
             fontFamily: "Outfit, sans-serif",
