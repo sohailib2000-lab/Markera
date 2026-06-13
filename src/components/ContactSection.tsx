@@ -7,10 +7,12 @@ import GlassCard from "./GlassCard";
 export default function ContactSection() {
   const ref = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("sending");
+    setErrorMessage(null);
 
     const formData = new FormData(e.currentTarget);
     const name = formData.get("name") as string;
@@ -27,14 +29,24 @@ export default function ContactSection() {
       });
 
       if (!response.ok) {
-        throw new Error("Submission failed");
+        let errMsg = "Submission failed";
+        try {
+          const errData = await response.json();
+          if (errData && errData.error) {
+            errMsg = errData.error;
+          }
+        } catch (_) {
+          // If response body is not JSON or cannot be parsed
+        }
+        throw new Error(errMsg);
       }
 
       setStatus("sent");
       (e.target as HTMLFormElement).reset();
       setTimeout(() => setStatus("idle"), 5000);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Failed to submit contact form:", err);
+      setErrorMessage(err.message || "Failed to submit. Please try again.");
       setStatus("error");
       setTimeout(() => setStatus("idle"), 6000);
     }
@@ -146,7 +158,7 @@ export default function ContactSection() {
                 </div>
 
                 <div>
-                  {status === "error" && (
+                   {status === "error" && (
                     <div style={{
                       color: "#f87171",
                       fontSize: "0.85rem",
@@ -158,7 +170,7 @@ export default function ContactSection() {
                       padding: "10px",
                       borderRadius: "8px"
                     }}>
-                      Failed to submit. Please try again or check settings.
+                      {errorMessage || "Failed to submit. Please try again or check settings."}
                     </div>
                   )}
 
